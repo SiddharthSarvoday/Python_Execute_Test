@@ -1,18 +1,30 @@
-pipeline {
-    agent {
-      docker {
-        image 'python:3'
-        
-      }
-    }
-    stages {
-        stage('Test') {
-            steps {
-              sh """
-              python --version
-              python ./script.py
-              """
+pipeline{
+    
+    agent any {
+
+        stages{
+
+            stage('version'){
+
+                steps{
+
+                    sh 'python3 --version'
+
+                }
             }
+
+            stage('Hello'){
+
+                steps{
+
+                    sh 'python3 --script.py'
+
+                }
+            }
+
         }
+
     }
+
+
 }
