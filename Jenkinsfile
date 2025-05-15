@@ -1,15 +1,30 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'debian:latest'
+            args '-u root'
+        }
+    }
+
+    environment {
+        SMB_USER = credentials('network-user')
+    }
 
     stages {
-        stage('Copy Excel File') {
+        stage('Install Tools') {
             steps {
-                script {
-                    // Copy using smbclient
-                    sh """
-                        smbclient 'C:\\\\Users\\SIDDHARTH\\PyCharmMiscProject\\' -U siddharth%password -c 'get Hanuman Chalisa - Print Out.xlsx ${WORKSPACE}/file.xlsx'
-                    """
-                }
+                sh '''
+                    apt-get update
+                    apt-get install -y smbclient
+                '''
+            }
+        }
+
+        stage('Copy Excel from Network') {
+            steps {
+                sh """
+                    smbclient 'C:\\\\Users\\SIDDHARTH\\PyCharmMiscProject\\' -U ${SMB_USER_USR}%${SMB_USER_PSW} -c 'get Hanuman Chalisa - Print Out.xlsx ${WORKSPACE}/file.xlsx'
+                """
             }
         }
     }
