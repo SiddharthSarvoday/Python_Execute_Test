@@ -1,6 +1,13 @@
 pipeline{
     
-    agent any {
+    agent any
+
+    environment {
+        // Set the UNC path of the network file
+        NETWORK_FILE = 'C:\\\\Users\\SIDDHARTH\\PyCharmMiscProject\\Hanuman Chalisa - Print Out.xlsx'
+        // Optional: Jenkins workspace path if you want to hardcode or use $WORKSPACE
+        DEST_FILE = "${WORKSPACE}\\file.xlsx"
+    }
 
         stages{
 
@@ -13,6 +20,17 @@ pipeline{
                 }
             }
 
+        stage('Copy Excel File') {
+            steps {
+                script {
+                    bat """
+                    echo Copying Excel file from network drive...
+                    copy "${env.NETWORK_FILE}" "${env.DEST_FILE}"
+                    """
+                }
+            }
+        }
+
             stage('Hello'){
 
                 steps{
@@ -24,7 +42,7 @@ pipeline{
 
         }
 
-    }
+    
 
 
 }
