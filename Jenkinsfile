@@ -1,30 +1,23 @@
 pipeline {
-    agent {
-        docker {
-            image 'debian:latest'
-            args '-u root'
-        }
-    }
-
-    environment {
-        SMB_USER = credentials('network-user')
-    }
+    agent any
 
     stages {
-        stage('Install Tools') {
+        stage('Copy Excel File') {
             steps {
-                sh '''
-                    apt-get update
-                    apt-get install -y smbclient
-                '''
+                script {
+                    // Define source and destination
+                    def source = 'C:\\Users\\SIDDHARTH\\PyCharmMiscProject\\Testing_File.xlsx'
+                    def destination = "${env.WORKSPACE}\\Testing_File.xlsx"
+
+                    // Copy using bat command
+                    bat "copy \"${source}\" \"${destination}\""
+                }
             }
         }
 
-        stage('Copy Excel from Network') {
+        stage('Verify Copy') {
             steps {
-                sh """
-                    smbclient 'C:\\\\Users\\SIDDHARTH\\PyCharmMiscProject\\' -U ${SMB_USER_USR}%${SMB_USER_PSW} -c 'get Hanuman Chalisa - Print Out.xlsx ${WORKSPACE}/file.xlsx'
-                """
+                bat "dir ${env.WORKSPACE}"
             }
         }
     }
