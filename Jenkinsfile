@@ -1,13 +1,13 @@
 pipeline{
     
-    agent any
+    agent any{
 
-    environment {
-        // Set the UNC path of the network file
-        NETWORK_FILE = 'C:\\\\Users\\SIDDHARTH\\PyCharmMiscProject\\Hanuman Chalisa - Print Out.xlsx'
-        // Optional: Jenkins workspace path if you want to hardcode or use $WORKSPACE
-        DEST_FILE = "${WORKSPACE}\\file.xlsx"
-    }
+        environment {
+            // Set the UNC path of the network file
+            NETWORK_FILE = 'C:\\\\Users\\SIDDHARTH\\PyCharmMiscProject\\Hanuman Chalisa - Print Out.xlsx'
+            // Optional: Jenkins workspace path if you want to hardcode or use $WORKSPACE
+            DEST_FILE = "${WORKSPACE}\\file.xlsx"
+        }
 
         stages{
 
@@ -42,7 +42,7 @@ pipeline{
 
         }
 
-    
+    }
 
 
 }
