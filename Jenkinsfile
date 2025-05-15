@@ -1,6 +1,6 @@
 pipeline{
     
-    agent any{
+    agent any{}
 
         environment {
             // Set the UNC path of the network file
@@ -42,7 +42,7 @@ pipeline{
 
         }
 
-    }
+    
 
 
 }
