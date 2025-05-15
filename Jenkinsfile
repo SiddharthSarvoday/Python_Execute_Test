@@ -1,36 +1,18 @@
-pipeline{
-    
+pipeline {
     agent any
 
-        environment {
-            // Set the UNC path of the network file
-            NETWORK_FILE = 'C:\\\\Users\\SIDDHARTH\\PyCharmMiscProject\\Hanuman Chalisa - Print Out.xlsx'
-            // Optional: Jenkins workspace path if you want to hardcode or use $WORKSPACE
-            DEST_FILE = "${WORKSPACE}\\file.xlsx"
-        }
-
-        stages{
-
-
-
-            stage('Copy Excel File') {
-                steps {
-                    script {
-                        bat """
-                        echo Copying Excel file from network drive...
-                        copy "${env.NETWORK_FILE}" "${env.DEST_FILE}"
-                        """
-                    }
+    stages {
+        stage('Copy Excel File') {
+            steps {
+                script {
+                    // Copy using smbclient
+                    sh """
+                        smbclient 'C:\\\\Users\\SIDDHARTH\\PyCharmMiscProject\\' -U siddharth%password -c 'get Hanuman Chalisa - Print Out.xlsx ${WORKSPACE}/file.xlsx'
+                    """
                 }
             }
-
-
-
         }
-
-    
-
-
+    }
 }
 
 
