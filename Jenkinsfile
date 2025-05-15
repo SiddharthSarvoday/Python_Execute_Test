@@ -1,6 +1,6 @@
 pipeline{
     
-    agent any{}
+    agent any
 
         environment {
             // Set the UNC path of the network file
@@ -11,34 +11,20 @@ pipeline{
 
         stages{
 
-            stage('version'){
 
-                steps{
 
-                    sh 'python3 --version'
-
+            stage('Copy Excel File') {
+                steps {
+                    script {
+                        bat """
+                        echo Copying Excel file from network drive...
+                        copy "${env.NETWORK_FILE}" "${env.DEST_FILE}"
+                        """
+                    }
                 }
             }
 
-        stage('Copy Excel File') {
-            steps {
-                script {
-                    bat """
-                    echo Copying Excel file from network drive...
-                    copy "${env.NETWORK_FILE}" "${env.DEST_FILE}"
-                    """
-                }
-            }
-        }
 
-            stage('Hello'){
-
-                steps{
-
-                    sh 'python3 script.py'
-
-                }
-            }
 
         }
 
